@@ -6,13 +6,14 @@ import { useUser } from "~/hooks/api/auth";
 export function useAuthStatus() {
     const { user, isFetched, isFetching } = useUser();
 
-    const isLoggedIn = Boolean(user?.id);
-    const showGuestAuth = isFetched && !isFetching && !isLoggedIn;
+    const sessionReady = isFetched && !isFetching;
+    const isLoggedIn = Boolean(user?.id && user.emailVerified);
+    const showGuestAuth = sessionReady && !user?.id;
 
     return {
         user,
         isLoggedIn,
         showGuestAuth,
-        showAuthedNav: isLoggedIn,
+        showAuthedNav: sessionReady && isLoggedIn,
     };
 }

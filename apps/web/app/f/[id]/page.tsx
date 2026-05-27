@@ -324,7 +324,7 @@ export default function PublicFormPage() {
                                     </Link>
                                 ) : (
                                     <Link
-                                        href="/verify-email"
+                                        href="/verify-email/sent"
                                         className="mc-block h-12 inline-flex items-center justify-center px-6 font-pixel text-xs text-white"
                                         style={{ background: ui.submitBg }}
                                     >

@@ -31,10 +31,8 @@ export function useRedirectIfAuthenticated(redirectTo: string = "/dashboard") {
             router.replace(redirectTo);
             return;
         }
-        if (user?.id && !user.emailVerified) {
-            router.replace("/verify-email");
-            return;
-        }
+        // Unverified sessions stay on the current page (e.g. check-inbox, email link).
+        // `/verify-email` is only for links that include `?token=…`.
 
         if (isUserError && !refreshAttemptedRef.current && !isRefreshing) {
             refreshAttemptedRef.current = true;

@@ -20,7 +20,7 @@ export function useRequireAuth(redirectTo = "/login") {
 
         if (user?.id) {
             if (!user.emailVerified) {
-                router.replace("/verify-email");
+                router.replace("/verify-email/sent");
             }
             return;
         }

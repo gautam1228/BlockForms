@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { AlertTriangle, CheckCircle2, MailCheck } from "lucide-react";
 
 import { Spinner } from "~/components/ui/spinner";
-import { useVerifyEmail } from "~/hooks/api/auth";
+import { useUser, useVerifyEmail } from "~/hooks/api/auth";
 import { useRedirectIfAuthenticated } from "~/hooks/auth/use-redirect-if-authenticated";
 import { userErrorMessage } from "~/lib/user-error";
 
@@ -18,6 +18,7 @@ export function VerifyEmailRunner({ token }: VerifyEmailRunnerProps) {
     // (and try a refresh-session round-trip if the access token is missing).
     useRedirectIfAuthenticated("/dashboard");
 
+    const { user, isLoading: isUserLoading } = useUser();
     const { verifyEmail, isPending, isSuccess, isError, data, error } = useVerifyEmail();
 
     // Strict-mode in dev double-invokes effects; guard so we only fire once per token.
@@ -31,6 +32,36 @@ export function VerifyEmailRunner({ token }: VerifyEmailRunnerProps) {
     }, [token, verifyEmail]);
 
     if (!token) {
+        if (isUserLoading) {
+            return (
+                <div className="mc-panel rounded-md p-8 bg-card text-center">
+                    <div className="flex flex-col items-center gap-3 py-4">
+                        <Spinner />
+                        <p className="font-mc text-lg text-muted-foreground">Loading...</p>
+                    </div>
+                </div>
+            );
+        }
+
+        if (user?.id && !user.emailVerified) {
+            return (
+                <div className="mc-panel rounded-md p-8 bg-card text-center">
+                    <div className="mc-block bg-gold w-14 h-14 mx-auto mb-5 grid place-items-center">
+                        <MailCheck className="h-6 w-6 text-white" />
+                    </div>
+                    <h1 className="font-pixel text-base">CHECK YOUR INBOX</h1>
+                    <p className="font-mc text-lg text-muted-foreground mt-3">
+                        Open the verification link we emailed you to activate your account.
+                    </p>
+                    <Link href="/verify-email/sent" className="inline-block mt-6">
+                        <button className="mc-block bg-grass text-primary-foreground h-11 px-5 font-pixel text-[10px]">
+                            VERIFICATION HELP
+                        </button>
+                    </Link>
+                </div>
+            );
+        }
+
         return (
             <div className="mc-panel rounded-md p-8 bg-card text-center">
                 <div className="mc-block bg-redstone w-14 h-14 mx-auto mb-5 grid place-items-center">
