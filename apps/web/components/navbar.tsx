@@ -26,7 +26,7 @@ export function Navbar() {
     const navItems = showAuthedNav ? AUTHED_NAV : PUBLIC_NAV;
 
     return (
-        <header className="mc-navbar sticky top-0 z-50 w-full backdrop-blur-md supports-[backdrop-filter]:bg-[color-mix(in_oklab,var(--card)_94%,white)]">
+        <header className="mc-navbar sticky top-0 z-50 w-full backdrop-blur-md">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
                 <Link href="/" className="flex items-center gap-2 group">
                     <Image

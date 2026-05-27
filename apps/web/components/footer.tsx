@@ -9,7 +9,7 @@ import { useAuthStatus } from "~/hooks/auth/use-auth-status";
 /** Replace `#` with your profile URLs */
 const SOCIAL_LINKS = {
     twitter: "https://x.com/gautamtam_",
-    github: "https://github.com/gautamtam",
+    github: "https://github.com/gautam1228",
     linkedin: "https://www.linkedin.com/in/gautamsingh28/",
 } as const;
 

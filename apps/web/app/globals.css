@@ -182,11 +182,9 @@
 
 @layer components {
   .mc-navbar {
-    border-bottom: 2px solid color-mix(in oklab, var(--grass-dark) 28%, var(--border));
-    background: color-mix(in oklab, var(--card) 94%, white);
-    box-shadow:
-      0 1px 0 0 color-mix(in oklab, white 90%, transparent),
-      0 4px 0 0 color-mix(in oklab, var(--grass-dark) 12%, transparent);
+    border-bottom: 2px solid color-mix(in oklab, var(--grass-dark) 22%, transparent);
+    background: color-mix(in oklab, var(--card) 72%, transparent);
+    box-shadow: 0 1px 0 0 color-mix(in oklab, white 50%, transparent);
   }
 
   .mc-navbar-link {
@@ -200,11 +198,10 @@
 
   .mc-navbar-link--active {
     color: var(--foreground);
-    /* Slightly darker than default accent highlight — clearly visible on the bar */
-    background: oklch(0.86 0.05 92);
+    background: oklch(0.92 0.045 95);
     box-shadow:
-      inset -1px -1px 0 0 color-mix(in oklab, oklch(0.75 0.04 85) 40%, transparent),
-      inset 1px 1px 0 0 color-mix(in oklab, white 85%, transparent);
+      inset -1px -1px 0 0 color-mix(in oklab, oklch(0.82 0.04 90) 30%, transparent),
+      inset 1px 1px 0 0 color-mix(in oklab, white 90%, transparent);
   }
 
   .mc-profile-ring {

@@ -97,14 +97,16 @@ export default function Landing() {
                         <Sparkles className="h-3.5 w-3.5" />
                         <span className="font-pixel text-[9px]">v1.0 · NOW IN BETA</span>
                     </div>
-                    <h1 className="font-pixel text-2xl sm:text-4xl md:text-5xl leading-[1.4] text-foreground max-w-4xl mx-auto">
-                        CRAFT FORMS,
+                    <h1 className="font-pixel text-2xl sm:text-4xl md:text-4xl leading-[1.4] text-foreground max-w-4xl mx-auto">
+                        CRAFT FORMS &
+                        <br />
+                        BUILD INSIGHTS.
                         <br />
                         <span className="text-primary">BLOCK BY BLOCK.</span>
                     </h1>
                     <p className="font-mc text-xl sm:text-2xl text-muted-foreground mt-8 max-w-2xl mx-auto">
-                        A Typeform-style builder with a pickaxe. Design dynamic forms, publish
-                        shareable links, and mine every response.
+                        Build interactive forms, publish in seconds, and track every response like
+                        rare loot drops.
                     </p>
                     <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
                         <Link href="/signup">
@@ -114,7 +116,7 @@ export default function Landing() {
                         </Link>
                         <Link href="/dashboard">
                             <button className="mc-block mc-block-stone bg-stone h-12 px-6 font-pixel text-xs text-foreground">
-                                OPEN DASHBOARD
+                                OPEN INVENTORY
                             </button>
                         </Link>
                     </div>
