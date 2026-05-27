@@ -3,11 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Sparkles } from "lucide-react";
+import { Pickaxe } from "lucide-react";
 
 import { cn } from "~/lib/utils";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
+import { PasswordInput } from "~/components/ui/password-input";
 import { useSignup } from "~/hooks/api/auth";
 import { useRedirectIfAuthenticated } from "~/hooks/auth/use-redirect-if-authenticated";
 import { userErrorMessage } from "~/lib/user-error";
@@ -51,17 +52,18 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <div className="mc-panel rounded-md overflow-hidden bg-card">
-                <div className="grid md:grid-cols-2">
-                    <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
-                        <FieldGroup>
-                            <div className="flex flex-col items-center gap-2 text-center">
-                                <div className="mc-block bg-gold w-12 h-12 mb-2" />
-                                <h1 className="font-pixel text-base">CREATE ACCOUNT</h1>
-                                <p className="font-mc text-lg text-muted-foreground">
-                                    Start crafting forms in seconds.
-                                </p>
+                <form className="p-6 md:p-8" onSubmit={handleSubmit(onSubmit)}>
+                    <FieldGroup>
+                        <div className="flex flex-col items-center gap-2 text-center">
+                            <div className="mc-block bg-grass mb-2 grid h-12 w-12 place-items-center">
+                                <Pickaxe className="h-6 w-6 text-white/90" />
                             </div>
-                            <Field>
+                            <h1 className="font-pixel text-base">CREATE ACCOUNT</h1>
+                            <p className="font-mc text-lg text-muted-foreground">
+                                Start crafting forms in seconds.
+                            </p>
+                        </div>
+                        <Field>
                                 <FieldLabel htmlFor="full-name" className="font-mc text-base">
                                     Crafter name
                                 </FieldLabel>
@@ -98,10 +100,10 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
                                         >
                                             Password
                                         </FieldLabel>
-                                        <Input
+                                        <PasswordInput
                                             id="password"
-                                            type="password"
                                             required
+                                            autoComplete="new-password"
                                             {...register("password")}
                                         />
                                     </Field>
@@ -112,10 +114,10 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
                                         >
                                             Confirm
                                         </FieldLabel>
-                                        <Input
+                                        <PasswordInput
                                             id="confirm-password"
-                                            type="password"
                                             required
+                                            autoComplete="new-password"
                                             {...register("confirmPassword")}
                                         />
                                     </Field>
@@ -141,40 +143,28 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
                                     )}
                                 </FieldDescription>
                             )}
-                            <FieldDescription className="font-mc text-base text-center">
-                                Already a crafter?{" "}
-                                <Link
-                                    href="/login"
-                                    className="text-primary underline underline-offset-2"
-                                >
-                                    Log in
-                                </Link>
-                            </FieldDescription>
-                        </FieldGroup>
-                    </form>
-
-                    {/* MC-themed visual panel (replaces the old placeholder.svg) */}
-                    <div className="relative hidden overflow-hidden md:block">
-                        <div className="absolute inset-0 grid place-items-center">
-                            <div className="animate-mc-float">
-                                <div className="w-28 h-28 mc-block bg-gold grid place-items-center">
-                                    <Sparkles className="h-10 w-10 text-white/90" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="absolute bottom-0 left-0 right-0 h-4 bg-grass-block" />
-                    </div>
-                </div>
+                        <FieldDescription className="font-mc text-base text-center">
+                            Already a crafter?{" "}
+                            <Link
+                                href="/login"
+                                className="text-primary underline underline-offset-2"
+                            >
+                                Log in
+                            </Link>
+                        </FieldDescription>
+                    </FieldGroup>
+                </form>
+                <div className="h-4 bg-grass-block" aria-hidden />
             </div>
             <FieldDescription className="font-mc text-base px-6 text-center">
                 By clicking continue, you agree to our{" "}
-                <a href="#" className="text-primary underline underline-offset-2">
+                <Link href="/terms" className="text-primary underline underline-offset-2">
                     Terms of Service
-                </a>{" "}
+                </Link>{" "}
                 and{" "}
-                <a href="#" className="text-primary underline underline-offset-2">
+                <Link href="/privacy" className="text-primary underline underline-offset-2">
                     Privacy Policy
-                </a>
+                </Link>
                 .
             </FieldDescription>
         </div>

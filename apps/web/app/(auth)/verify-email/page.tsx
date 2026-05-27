@@ -1,3 +1,4 @@
+import { AuthPageShell } from "~/components/auth-page-shell";
 import { VerifyEmailRunner } from "~/components/verify-email-runner";
 import { SiteLayout } from "~/components/site-layout";
 
@@ -11,11 +12,11 @@ export default async function VerifyEmailPage({ searchParams }: VerifyEmailPageP
 
     return (
         <SiteLayout hideFooter>
-            <section className="min-h-[calc(100svh-4rem)] grid place-items-center px-4 py-12">
+            <AuthPageShell>
                 <div className="w-full max-w-md">
                     <VerifyEmailRunner token={tokenValue ?? null} />
                 </div>
-            </section>
+            </AuthPageShell>
         </SiteLayout>
     );
 }

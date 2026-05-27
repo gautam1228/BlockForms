@@ -1,3 +1,4 @@
+import { AuthPageShell } from "~/components/auth-page-shell";
 import { ForgotPasswordSent } from "~/components/forgot-password-sent";
 import { SiteLayout } from "~/components/site-layout";
 
@@ -13,11 +14,11 @@ export default async function ForgotPasswordSentPage({
 
     return (
         <SiteLayout hideFooter>
-            <section className="min-h-[calc(100svh-4rem)] grid place-items-center px-4 py-12">
+            <AuthPageShell>
                 <div className="w-full max-w-md">
                     <ForgotPasswordSent maskedEmail={maskedEmail ?? null} />
                 </div>
-            </section>
+            </AuthPageShell>
         </SiteLayout>
     );
 }

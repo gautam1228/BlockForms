@@ -7,7 +7,7 @@ import { AlertTriangle, CheckCircle2, KeyRound } from "lucide-react";
 
 import { cn } from "~/lib/utils";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "~/components/ui/field";
-import { Input } from "~/components/ui/input";
+import { PasswordInput } from "~/components/ui/password-input";
 import { useResetPassword } from "~/hooks/api/auth";
 import { useRedirectIfAuthenticated } from "~/hooks/auth/use-redirect-if-authenticated";
 import { userErrorMessage } from "~/lib/user-error";
@@ -122,9 +122,8 @@ export function ResetPasswordForm({ className, token, ...props }: ResetPasswordF
                             <FieldLabel htmlFor="password" className="font-mc text-base">
                                 New password
                             </FieldLabel>
-                            <Input
+                            <PasswordInput
                                 id="password"
-                                type="password"
                                 required
                                 autoComplete="new-password"
                                 {...register("password", {
@@ -146,9 +145,8 @@ export function ResetPasswordForm({ className, token, ...props }: ResetPasswordF
                             <FieldLabel htmlFor="confirmPassword" className="font-mc text-base">
                                 Confirm new password
                             </FieldLabel>
-                            <Input
+                            <PasswordInput
                                 id="confirmPassword"
-                                type="password"
                                 required
                                 autoComplete="new-password"
                                 {...register("confirmPassword", {

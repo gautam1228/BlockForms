@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { AuthPageShell } from "~/components/auth-page-shell";
 import { LoginForm } from "~/components/login-form";
 import { SiteLayout } from "~/components/site-layout";
 
@@ -14,13 +15,13 @@ function LoginFormFallback() {
 export default function LoginPage() {
     return (
         <SiteLayout hideFooter>
-            <section className="min-h-[calc(100svh-4rem)] grid place-items-center px-4 py-12">
-                <div className="w-full max-w-sm md:max-w-4xl">
+            <AuthPageShell>
+                <div className="w-full max-w-md">
                     <Suspense fallback={<LoginFormFallback />}>
                         <LoginForm />
                     </Suspense>
                 </div>
-            </section>
+            </AuthPageShell>
         </SiteLayout>
     );
 }

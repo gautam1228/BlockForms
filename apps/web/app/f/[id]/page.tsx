@@ -7,11 +7,11 @@ import { Star, CheckCircle2, Mountain, Gem, Flame, Sparkles, Loader2, Lock } fro
 import { toast } from "~/lib/toast";
 
 import { Input } from "~/components/ui/input";
+import { PasswordInput } from "~/components/ui/password-input";
 import { Textarea } from "~/components/ui/textarea";
 import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Checkbox } from "~/components/ui/checkbox";
-import { Switch } from "~/components/ui/switch";
 import {
     themeStyles,
     type FormDoc,
@@ -130,6 +130,21 @@ export default function PublicFormPage() {
     const Icon = ui.icon;
 
     const sortedFields = useMemo(() => (form ? sortFieldsByIndex(form.fields) : []), [form]);
+
+    useEffect(() => {
+        if (!form) return;
+        setValues((prev) => {
+            let changed = false;
+            const next = { ...prev };
+            for (const f of form.fields) {
+                if (f.type === "yes_no" && next[f.id] === undefined) {
+                    next[f.id] = false;
+                    changed = true;
+                }
+            }
+            return changed ? next : prev;
+        });
+    }, [form]);
 
     const needsSignIn = Boolean(form?.requiresLogin && isUserFetched && !user?.id);
     const needsEmailVerified = Boolean(
@@ -336,8 +351,7 @@ export default function PublicFormPage() {
                                         This form is password protected
                                     </p>
                                 </div>
-                                <Input
-                                    type="password"
+                                <PasswordInput
                                     value={passwordDraft}
                                     onChange={(e) => {
                                         setPasswordDraft(e.target.value);
@@ -470,9 +484,8 @@ function FieldRenderer({
             break;
         case "password":
             control = (
-                <Input
+                <PasswordInput
                     style={inputStyle}
-                    type="password"
                     value={(value as string) ?? ""}
                     onChange={(e) => onChange(e.target.value)}
                     placeholder={field.placeholder}
@@ -492,14 +505,37 @@ function FieldRenderer({
                 />
             );
             break;
-        case "yes_no":
+        case "yes_no": {
+            const selected = value === true ? "yes" : "no";
             control = (
-                <label className="flex items-center gap-3 font-mc text-lg cursor-pointer">
-                    <Switch checked={Boolean(value)} onCheckedChange={(c) => onChange(c)} />
-                    {value ? "Yes" : "No"}
-                </label>
+                <RadioGroup
+                    value={selected}
+                    onValueChange={(v) => onChange(v === "yes")}
+                    className="space-y-2"
+                >
+                    {(
+                        [
+                            { id: "yes", label: "Yes" },
+                            { id: "no", label: "No" },
+                        ] as const
+                    ).map((opt) => (
+                        <label
+                            key={opt.id}
+                            className="flex items-center gap-3 font-mc text-lg cursor-pointer rounded-md p-3 transition"
+                            style={{
+                                background: ui.inputBg,
+                                color: ui.inputText,
+                                border: `2px solid ${ui.cardBorder}`,
+                            }}
+                        >
+                            <RadioGroupItem value={opt.id} />
+                            {opt.label}
+                        </label>
+                    ))}
+                </RadioGroup>
             );
             break;
+        }
         case "single_choice":
             control = (
                 <RadioGroup
