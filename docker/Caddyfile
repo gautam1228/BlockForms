@@ -1,0 +1,15 @@
+# Replace {$DOMAIN} via docker-compose environment.
+# Caddy terminates TLS and routes API paths to the backend, everything else to Next.js.
+
+{$DOMAIN} {
+	encode gzip zstd
+
+	@api path /trpc* /api* /docs* /openapi.json /health
+	handle @api {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		reverse_proxy web:3000
+	}
+}

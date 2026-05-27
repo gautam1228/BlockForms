@@ -1,0 +1,403 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Minecraft-inspired but tasteful SaaS design system */
+
+@theme inline {
+  /* Pixel-tight radii for a crisp, block-like feel.
+   * Capped at 8px so shadcn primitives using rounded-4xl / rounded-2xl
+   * (Button, Input, Card, etc.) get crisp corners instead of pill shapes. */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-2xl: 6px;
+  --radius-3xl: 8px;
+  --radius-4xl: 8px;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+
+  /* Minecraft accent palette */
+  --color-grass: var(--grass);
+  --color-grass-dark: var(--grass-dark);
+  --color-dirt: var(--dirt);
+  --color-dirt-dark: var(--dirt-dark);
+  --color-stone: var(--stone);
+  --color-stone-dark: var(--stone-dark);
+  --color-sky: var(--sky);
+  --color-gold: var(--gold);
+  --color-redstone: var(--redstone);
+  --color-diamond: var(--diamond);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-heading: var(--font-serif);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-serif: var(--font-serif);
+  --font-pixel: var(--font-pixel);
+  --font-mc: var(--font-mc);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* Light, airy SaaS feel with Minecraft accents */
+  --background: oklch(0.98 0.01 95);
+  --foreground: oklch(0.22 0.02 240);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.02 240);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.22 0.02 240);
+
+  /* Grass green primary */
+  --primary: oklch(0.62 0.18 142);
+  --primary-foreground: oklch(0.99 0.01 100);
+
+  --secondary: oklch(0.94 0.02 95);
+  --secondary-foreground: oklch(0.25 0.03 240);
+
+  --muted: oklch(0.95 0.01 95);
+  --muted-foreground: oklch(0.48 0.02 240);
+
+  --accent: oklch(0.92 0.04 95);
+  --accent-foreground: oklch(0.22 0.02 240);
+
+  --destructive: oklch(0.58 0.22 28);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.88 0.02 95);
+  --input: oklch(0.92 0.01 95);
+  --ring: oklch(0.62 0.18 142);
+
+  /* Minecraft palette */
+  --grass: oklch(0.66 0.19 142);
+  --grass-dark: oklch(0.45 0.14 142);
+  --dirt: oklch(0.52 0.09 55);
+  --dirt-dark: oklch(0.38 0.07 55);
+  --stone: oklch(0.65 0.01 240);
+  --stone-dark: oklch(0.45 0.01 240);
+  --sky: oklch(0.78 0.12 230);
+  --gold: oklch(0.82 0.16 85);
+  --redstone: oklch(0.55 0.22 28);
+  --diamond: oklch(0.78 0.13 200);
+
+  --chart-1: var(--grass);
+  --chart-2: var(--diamond);
+  --chart-3: var(--gold);
+  --chart-4: var(--redstone);
+  --chart-5: var(--dirt);
+
+  --sidebar: oklch(0.97 0.01 95);
+  --sidebar-foreground: oklch(0.22 0.02 240);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: oklch(0.92 0.04 95);
+  --sidebar-accent-foreground: oklch(0.22 0.02 240);
+  --sidebar-border: oklch(0.88 0.02 95);
+  --sidebar-ring: var(--ring);
+
+  --cursor-pickaxe: url("/cursor_pickaxe_32.png") 8 4, auto;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    cursor: var(--cursor-pickaxe);
+    scrollbar-width: thin;
+    scrollbar-color: var(--stone) var(--dirt-dark);
+  }
+  body {
+    @apply bg-background text-foreground;
+    cursor: var(--cursor-pickaxe);
+  }
+  a,
+  button,
+  [role="button"],
+  label,
+  summary,
+  select {
+    cursor: var(--cursor-pickaxe);
+  }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea {
+    cursor: text;
+  }
+  .cursor-default,
+  .cursor-pointer {
+    cursor: var(--cursor-pickaxe);
+  }
+
+  /* Blocky Minecraft scrollbars (Firefox — colors on html above) */
+
+  /* Blocky Minecraft scrollbars (Chrome, Safari, Edge) */
+  *::-webkit-scrollbar {
+    width: 14px;
+    height: 14px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: linear-gradient(
+      180deg,
+      var(--dirt) 0%,
+      var(--dirt-dark) 100%
+    );
+    border-left: 2px solid color-mix(in oklab, var(--dirt-dark) 85%, black);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      180deg,
+      var(--grass) 0 22%,
+      var(--grass-dark) 22% 28%,
+      var(--stone) 28% 100%
+    );
+    border: 2px solid color-mix(in oklab, var(--stone-dark) 90%, black);
+    box-shadow:
+      inset -2px -2px 0 0 color-mix(in oklab, var(--stone-dark) 95%, black),
+      inset 2px 2px 0 0 color-mix(in oklab, var(--stone) 55%, white);
+    border-radius: 0;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--grass) 85%, white) 0 22%,
+      var(--grass-dark) 22% 28%,
+      color-mix(in oklab, var(--stone) 85%, white) 28% 100%
+    );
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background: linear-gradient(
+      180deg,
+      var(--grass-dark) 0 22%,
+      var(--dirt) 22% 28%,
+      var(--stone-dark) 28% 100%
+    );
+    box-shadow:
+      inset 2px 2px 0 0 color-mix(in oklab, var(--stone-dark) 95%, black),
+      inset -2px -2px 0 0 color-mix(in oklab, var(--stone) 40%, white);
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: var(--dirt-dark);
+  }
+}
+
+@layer utilities {
+  /* Pixel-perfect rendering */
+  .pixelated {
+    image-rendering: pixelated;
+  }
+
+  .font-pixel {
+    font-family: var(--font-pixel);
+    letter-spacing: 0.02em;
+  }
+  .font-mc {
+    font-family: var(--font-mc);
+  }
+
+  /* Beveled Minecraft block button — uses inset box-shadows to simulate 3D pixel bevels */
+  .mc-block {
+    position: relative;
+    border: 2px solid color-mix(in oklab, var(--grass-dark) 90%, black);
+    box-shadow:
+      inset -3px -3px 0 0 color-mix(in oklab, var(--grass-dark) 95%, black),
+      inset 3px 3px 0 0 color-mix(in oklab, var(--grass) 60%, white);
+    border-radius: 2px;
+  }
+  .mc-block:active {
+    box-shadow:
+      inset 3px 3px 0 0 color-mix(in oklab, var(--grass-dark) 95%, black),
+      inset -3px -3px 0 0 color-mix(in oklab, var(--grass) 60%, white);
+    transform: translateY(1px);
+  }
+  .mc-block-stone {
+    border-color: color-mix(in oklab, var(--stone-dark) 90%, black);
+    box-shadow:
+      inset -3px -3px 0 0 color-mix(in oklab, var(--stone-dark) 95%, black),
+      inset 3px 3px 0 0 color-mix(in oklab, var(--stone) 60%, white);
+  }
+  .mc-block-gold {
+    border-color: color-mix(in oklab, var(--gold) 60%, black);
+    box-shadow:
+      inset -3px -3px 0 0 color-mix(in oklab, var(--gold) 60%, black),
+      inset 3px 3px 0 0 color-mix(in oklab, var(--gold) 50%, white);
+  }
+  .mc-block-diamond {
+    border-color: color-mix(in oklab, var(--diamond) 50%, black);
+    box-shadow:
+      inset -3px -3px 0 0 color-mix(in oklab, var(--diamond) 60%, black),
+      inset 3px 3px 0 0 color-mix(in oklab, var(--diamond) 50%, white);
+  }
+
+  /* Pixel panel — softer, for cards */
+  .mc-panel {
+    background: var(--card);
+    border: 2px solid var(--border);
+    box-shadow:
+      inset -2px -2px 0 0 color-mix(in oklab, var(--border) 70%, black),
+      inset 2px 2px 0 0 color-mix(in oklab, var(--card) 80%, white),
+      0 6px 0 0 color-mix(in oklab, var(--border) 80%, black);
+  }
+
+  /* Grass top strip background */
+  .bg-grass-block {
+    background: linear-gradient(
+      180deg,
+      var(--grass) 0 28%,
+      var(--grass-dark) 28% 32%,
+      var(--dirt) 32% 100%
+    );
+  }
+
+  /* Sky gradient */
+  .bg-mc-sky {
+    background: linear-gradient(
+      180deg,
+      oklch(0.85 0.1 230) 0%,
+      oklch(0.92 0.06 220) 60%,
+      oklch(0.96 0.03 200) 100%
+    );
+  }
+
+  /* Floating block animation */
+  @keyframes mc-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(-6deg);
+    }
+    50% {
+      transform: translateY(-14px) rotate(6deg);
+    }
+  }
+  .animate-mc-float {
+    animation: mc-float 6s ease-in-out infinite;
+  }
+
+  @keyframes mc-spin {
+    from {
+      transform: rotateY(0deg);
+    }
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  .animate-mc-spin {
+    animation: mc-spin 8s linear infinite;
+  }
+
+  @keyframes mc-fall {
+    0% {
+      transform: translateY(-10vh) rotate(0deg);
+      opacity: 0;
+    }
+    10% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
+  }
+  .animate-mc-fall {
+    animation: mc-fall linear infinite;
+  }
+
+  /* Sonner toasts — Minecraft panel + pixel headings */
+  [data-sonner-toaster] [data-sonner-toast] {
+    font-family: var(--font-mc) !important;
+    font-size: 14px !important;
+  }
+
+  [data-sonner-toaster] [data-sonner-toast].mc-toast {
+    font-family: var(--font-mc) !important;
+    background: var(--card) !important;
+    color: var(--foreground) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 2px !important;
+    box-shadow:
+      inset -2px -2px 0 0 color-mix(in oklab, var(--border) 70%, black),
+      inset 2px 2px 0 0 color-mix(in oklab, var(--card) 80%, white),
+      0 6px 0 0 color-mix(in oklab, var(--border) 80%, black) !important;
+    padding: 12px 14px !important;
+  }
+
+  [data-sonner-toaster] .mc-toast-title {
+    font-family: var(--font-pixel) !important;
+    font-size: 10px !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    line-height: 1.4 !important;
+  }
+
+  [data-sonner-toaster] .mc-toast-description {
+    font-family: var(--font-mc) !important;
+    font-size: 14px !important;
+    opacity: 0.9 !important;
+  }
+
+  [data-sonner-toaster] [data-sonner-toast].mc-toast-success {
+    border-color: var(--grass-dark) !important;
+    background: color-mix(in oklab, var(--grass) 12%, var(--card)) !important;
+  }
+
+  [data-sonner-toaster] [data-sonner-toast].mc-toast-error {
+    border-color: var(--redstone) !important;
+    background: color-mix(in oklab, var(--redstone) 10%, var(--card)) !important;
+  }
+
+  [data-sonner-toaster] [data-sonner-toast].mc-toast-info {
+    border-color: var(--diamond) !important;
+    background: color-mix(in oklab, var(--diamond) 10%, var(--card)) !important;
+  }
+
+  [data-sonner-toaster] .mc-toast-close {
+    font-family: var(--font-pixel) !important;
+    border: 2px solid var(--border) !important;
+    border-radius: 2px !important;
+    background: var(--muted) !important;
+  }
+}
