@@ -87,6 +87,21 @@ Keep using `docker compose.yml` (postgres only) for local development with `pnpm
 
 ## Troubleshooting
 
+**502 on `/trpc` or `/api`** — Caddy cannot reach the API container.
+
+```bash
+docker compose -f docker-compose.prod.yml ps
+docker compose -f docker-compose.prod.yml logs api --tail 100
+curl -s http://localhost:8000/health   # from inside the api container network
+```
+
+Common causes:
+
+- API crashed on startup (missing/invalid env var — check logs for Zod errors)
+- `DATABASE_URL` host must be `postgres`, not `localhost`
+- Quoted values in `.env.production` (use `DOMAIN=blockforms.example.com`, not `DOMAIN="..."`)
+- API not rebuilt after env changes — run `up -d --build` again
+
 **Caddy can't get a certificate** — DNS must resolve to this server before starting Caddy. Check with `dig blockforms.yourdomain.com`.
 
 **Auth cookies not working** — ensure all URLs use the same `https://DOMAIN` and you're not mixing `www` and bare domain.

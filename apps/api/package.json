@@ -22,15 +22,16 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
-  "dependencies": {
-    "@repo/logger": "workspace:*",
-    "@repo/trpc": "workspace:*",
-    "@scalar/express-api-reference": "^0.8.30",
-    "@trpc/server": "^11.8.1",
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-    "express": "^5.2.1",
-    "trpc-to-openapi": "^3.1.0",
-    "zod": "^4.3.5"
-  }
+    "dependencies": {
+        "@repo/logger": "workspace:*",
+        "@repo/trpc": "workspace:*",
+        "@scalar/express-api-reference": "^0.8.30",
+        "@trpc/server": "^11.8.1",
+        "cookie-parser": "^1.4.7",
+        "cors": "^2.8.5",
+        "express": "^5.2.1",
+        "pg": "^8.16.3",
+        "trpc-to-openapi": "^3.1.0",
+        "zod": "^4.3.5"
+    }
 }
