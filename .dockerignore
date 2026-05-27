@@ -6,7 +6,6 @@
 **/.env
 **/.env.*
 !.env.production.example
-Lovable-MC
 .cursor
 **/*.md
 !deploy/README.md
