@@ -26,7 +26,7 @@ export function Navbar() {
     const navItems = showAuthedNav ? AUTHED_NAV : PUBLIC_NAV;
 
     return (
-        <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="mc-navbar sticky top-0 z-50 w-full backdrop-blur-md supports-[backdrop-filter]:bg-[color-mix(in_oklab,var(--card)_94%,white)]">
             <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
                 <Link href="/" className="flex items-center gap-2 group">
                     <Image
@@ -41,7 +41,7 @@ export function Navbar() {
                         <div className="font-pixel text-[10px] tracking-wider text-primary">
                             BLOCKFORMS
                         </div>
-                        <div className="font-mc text-xs text-muted-foreground -mt-0.5">
+                        <div className="font-mc text-xs text-[color-mix(in_oklab,var(--foreground)_55%,var(--muted-foreground))] -mt-0.5">
                             build · publish · collect
                         </div>
                     </div>
@@ -55,9 +55,7 @@ export function Navbar() {
                                 key={n.to}
                                 href={n.to}
                                 className={`font-mc text-lg px-3 py-1.5 rounded-sm transition-colors ${
-                                    active
-                                        ? "bg-accent text-foreground"
-                                        : "text-muted-foreground hover:text-foreground hover:bg-accent/60"
+                                    active ? "mc-navbar-link--active" : "mc-navbar-link"
                                 }`}
                             >
                                 {n.label}
@@ -71,7 +69,10 @@ export function Navbar() {
                     {showGuestAuth && (
                         <>
                             <Link href="/login" className="hidden sm:inline-flex">
-                                <Button variant="ghost" className="font-mc text-base">
+                                <Button
+                                    variant="ghost"
+                                    className="font-mc text-base text-foreground hover:bg-accent"
+                                >
                                     Log in
                                 </Button>
                             </Link>

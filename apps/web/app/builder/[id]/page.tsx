@@ -29,7 +29,7 @@ import {
     SelectValue,
 } from "~/components/ui/select";
 import {
-    FieldTypes,
+    BuilderFieldTypes,
     FIELD_LABELS,
     themeStyles,
     type FieldType,
@@ -637,7 +637,7 @@ export default function BuilderPage() {
                         <div className="mc-panel rounded-md p-5">
                             <h3 className="font-pixel text-[10px] mb-3">ADD FIELD</h3>
                             <div className="grid grid-cols-2 gap-2">
-                                {FieldTypes.map((t) => (
+                                {BuilderFieldTypes.map((t) => (
                                     <button
                                         key={t}
                                         type="button"

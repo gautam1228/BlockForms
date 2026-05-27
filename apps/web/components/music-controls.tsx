@@ -27,7 +27,7 @@ export function MusicControls({ className, showTrackSelectOnMobile = false }: Mu
             <Select value={trackId} onValueChange={(v) => setTrackId(v as typeof trackId)}>
                 <SelectTrigger
                     className={cn(
-                        "h-9 w-[140px] font-pixel text-[8px] border-2",
+                        "h-9 w-[140px] font-pixel text-[8px] border-2 bg-card text-foreground shadow-[inset_1px_1px_0_0_color-mix(in_oklab,white_70%,transparent)]",
                         !showTrackSelectOnMobile && "hidden sm:flex",
                     )}
                     aria-label="Background music track"

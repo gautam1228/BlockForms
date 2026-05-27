@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import React, { useState } from "react";
+import { FallingBlocksBackground } from "~/components/falling-blocks-background";
 import { Toaster } from "~/components/ui/sonner";
 import { MusicProvider } from "~/components/music-provider";
 
@@ -35,7 +36,8 @@ export const GlobalProviders: React.FC<{ children: React.ReactNode }> = ({ child
             >
                 <trpc.Provider queryClient={queryClient} client={trpcClient}>
                     <MusicProvider>
-                        {children}
+                        <FallingBlocksBackground />
+                        <div className="relative z-[1] min-h-screen">{children}</div>
                         <Toaster />
                     </MusicProvider>
                 </trpc.Provider>

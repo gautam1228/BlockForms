@@ -13,6 +13,9 @@ export const FieldTypes = [
 ] as const;
 export type FieldType = (typeof FieldTypes)[number];
 
+/** Field types shown in the builder — excludes `password` (form-level gate only). */
+export const BuilderFieldTypes = FieldTypes.filter((t) => t !== "password");
+
 export type FormStatus = RouterOutputs["form"]["getMyFormById"]["status"];
 export type FormVisibility = RouterOutputs["form"]["getMyFormById"]["visibility"];
 

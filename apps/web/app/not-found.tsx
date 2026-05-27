@@ -1,15 +1,13 @@
 import Link from "next/link";
 import { MapPinOff } from "lucide-react";
 
-import { FloatingBlocks } from "~/components/floating-blocks";
 import { SiteLayout } from "~/components/site-layout";
 
 export default function NotFound() {
     return (
         <SiteLayout>
-            <section className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden bg-mc-sky px-4">
-                <FloatingBlocks count={14} />
-                <div className="relative z-10 mx-auto max-w-lg text-center">
+            <section className="relative flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center overflow-hidden px-4">
+                <div className="relative z-[1] mx-auto max-w-lg text-center">
                     <div className="mc-block mx-auto mb-6 grid h-16 w-16 place-items-center bg-redstone">
                         <MapPinOff className="h-7 w-7 text-white" aria-hidden />
                     </div>

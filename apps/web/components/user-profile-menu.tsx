@@ -119,21 +119,23 @@ export function UserProfileMenu() {
                 <DropdownMenuTrigger asChild>
                     <button
                         type="button"
-                        className="h-9 w-9 shrink-0 overflow-hidden rounded-full p-0 border-0 bg-transparent"
+                        className="mc-profile-ring h-9 w-9 shrink-0 overflow-hidden p-0"
                         aria-label="Account menu"
                     >
-                        {user.profileImageUrl ? (
-                            /* eslint-disable-next-line @next/next/no-img-element */
-                            <img
-                                src={user.profileImageUrl}
-                                alt={user.fullName}
-                                className="h-full w-full rounded-full object-cover pixelated"
-                            />
-                        ) : (
-                            <span className="flex h-full w-full items-center justify-center rounded-full bg-gold font-pixel text-[9px] text-foreground">
-                                {initials(user.fullName)}
-                            </span>
-                        )}
+                        <span className="block h-full w-full overflow-hidden rounded-full">
+                            {user.profileImageUrl ? (
+                                /* eslint-disable-next-line @next/next/no-img-element */
+                                <img
+                                    src={user.profileImageUrl}
+                                    alt={user.fullName}
+                                    className="h-full w-full rounded-full object-cover pixelated"
+                                />
+                            ) : (
+                                <span className="flex h-full w-full items-center justify-center rounded-full bg-gold font-pixel text-[9px] text-foreground">
+                                    {initials(user.fullName)}
+                                </span>
+                            )}
+                        </span>
                     </button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="min-w-44 rounded-md border-2 p-1">

@@ -17,7 +17,6 @@ import {
 import { toast } from "sonner";
 
 import { SiteLayout } from "~/components/site-layout";
-import { FloatingBlocks } from "~/components/floating-blocks";
 
 const THEMES = [
     {
@@ -92,9 +91,8 @@ export default function Landing() {
     return (
         <SiteLayout>
             {/* HERO */}
-            <section className="relative overflow-hidden bg-mc-sky">
-                <FloatingBlocks count={14} />
-                <div className="relative mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-32 text-center">
+            <section className="relative overflow-hidden">
+                <div className="relative z-[1] mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-32 text-center">
                     <div className="inline-flex items-center gap-2 mc-block mc-block-gold bg-gold px-3 py-1 mb-6">
                         <Sparkles className="h-3.5 w-3.5" />
                         <span className="font-pixel text-[9px]">v1.0 · NOW IN BETA</span>
@@ -130,7 +128,12 @@ export default function Landing() {
                         </div>
                     </div>
                 </div>
-                <div className="h-4 bg-grass-block" />
+                <div className="mx-auto max-w-6xl px-4 sm:px-6">
+                    <div
+                        className="mc-theme-divider mc-theme-divider--full mc-grass-divider"
+                        aria-hidden
+                    />
+                </div>
             </section>
 
             {/* FEATURES */}

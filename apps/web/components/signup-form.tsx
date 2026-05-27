@@ -6,7 +6,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Sparkles } from "lucide-react";
 
 import { cn } from "~/lib/utils";
-import { FloatingBlocks } from "~/components/floating-blocks";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "~/components/ui/field";
 import { Input } from "~/components/ui/input";
 import { useSignup } from "~/hooks/api/auth";
@@ -155,8 +154,7 @@ export function SignupForm({ className, ...props }: React.ComponentProps<"div">)
                     </form>
 
                     {/* MC-themed visual panel (replaces the old placeholder.svg) */}
-                    <div className="relative hidden bg-mc-sky md:block overflow-hidden">
-                        <FloatingBlocks count={10} />
+                    <div className="relative hidden overflow-hidden md:block">
                         <div className="absolute inset-0 grid place-items-center">
                             <div className="animate-mc-float">
                                 <div className="w-28 h-28 mc-block bg-gold grid place-items-center">

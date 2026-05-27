@@ -125,11 +125,12 @@ export function MusicProvider({ children }: { children: React.ReactNode }) {
         const storedTrack = readStoredTrackId();
         setTrackIdState(storedTrack);
         try {
-            if (localStorage.getItem(MUSIC_ON_KEY) !== "1") return;
+            if (localStorage.getItem(MUSIC_ON_KEY) === "0") return;
             void startBgm(storedTrack)
                 .then(() => {
                     playingRef.current = true;
                     setPlaying(true);
+                    localStorage.setItem(MUSIC_ON_KEY, "1");
                 })
                 .catch(() => {
                     localStorage.setItem(MUSIC_ON_KEY, "0");

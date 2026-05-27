@@ -24,19 +24,20 @@ export function Footer() {
     const year = new Date().getFullYear();
 
     return (
-        <footer className="border-t border-border/60 mt-24">
-            <div className="h-3 bg-grass-block" />
+        <footer className="mc-footer-ground relative z-[1] mt-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 py-10">
                 <div className="flex flex-col sm:flex-row justify-between gap-6 text-sm">
                     <div>
-                        <Image
-                            src="/logo_with_text.png"
-                            alt="BlockForms"
-                            width={180}
-                            height={48}
-                            className="h-10 w-auto pixelated"
-                        />
-                        <p className="font-mc text-base text-muted-foreground mt-2">
+                        <Link href="/" className="inline-block">
+                            <Image
+                                src="/logo_with_text.png"
+                                alt="BlockForms"
+                                width={280}
+                                height={112}
+                                className="h-[4.75rem] w-auto max-w-[min(100%,17.5rem)] object-contain object-left pixelated"
+                            />
+                        </Link>
+                        <p className="font-mc text-base text-muted-foreground mt-3">
                             Crafted, block by block.
                         </p>
                     </div>
@@ -64,7 +65,7 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="mt-8 flex flex-col gap-4 border-t border-border/60 pt-6 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-8 flex flex-col gap-4 border-t border-[var(--footer-border)] pt-6 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-mc text-sm text-muted-foreground">
                         © {year} BlockForms. All rights reserved.
                     </p>

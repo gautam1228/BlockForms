@@ -115,6 +115,12 @@
   --stone: oklch(0.65 0.01 240);
   --stone-dark: oklch(0.45 0.01 240);
   --sky: oklch(0.78 0.12 230);
+  --mc-sky-gradient: linear-gradient(
+    180deg,
+    oklch(0.85 0.1 230) 0%,
+    oklch(0.92 0.06 220) 60%,
+    oklch(0.96 0.03 200) 100%
+  );
   --gold: oklch(0.82 0.16 85);
   --redstone: oklch(0.55 0.22 28);
   --diamond: oklch(0.78 0.13 200);
@@ -145,10 +151,14 @@
     @apply font-sans;
     cursor: var(--cursor-pickaxe);
     scrollbar-width: thin;
-    scrollbar-color: var(--stone) var(--dirt-dark);
+    scrollbar-color: var(--grass) transparent;
+    /* Gutter behind scrollbar matches sky when WebKit won't paint a transparent track */
+    background: var(--mc-sky-gradient);
+    background-attachment: fixed;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
+    background: transparent;
     cursor: var(--cursor-pickaxe);
   }
   a,
@@ -168,60 +178,39 @@
     cursor: var(--cursor-pickaxe);
   }
 
-  /* Blocky Minecraft scrollbars (Firefox — colors on html above) */
+}
 
-  /* Blocky Minecraft scrollbars (Chrome, Safari, Edge) */
-  *::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: linear-gradient(
-      180deg,
-      var(--dirt) 0%,
-      var(--dirt-dark) 100%
-    );
-    border-left: 2px solid color-mix(in oklab, var(--dirt-dark) 85%, black);
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      180deg,
-      var(--grass) 0 22%,
-      var(--grass-dark) 22% 28%,
-      var(--stone) 28% 100%
-    );
-    border: 2px solid color-mix(in oklab, var(--stone-dark) 90%, black);
+@layer components {
+  .mc-navbar {
+    border-bottom: 2px solid color-mix(in oklab, var(--grass-dark) 28%, var(--border));
+    background: color-mix(in oklab, var(--card) 94%, white);
     box-shadow:
-      inset -2px -2px 0 0 color-mix(in oklab, var(--stone-dark) 95%, black),
-      inset 2px 2px 0 0 color-mix(in oklab, var(--stone) 55%, white);
-    border-radius: 0;
+      0 1px 0 0 color-mix(in oklab, white 90%, transparent),
+      0 4px 0 0 color-mix(in oklab, var(--grass-dark) 12%, transparent);
   }
 
-  *::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      180deg,
-      color-mix(in oklab, var(--grass) 85%, white) 0 22%,
-      var(--grass-dark) 22% 28%,
-      color-mix(in oklab, var(--stone) 85%, white) 28% 100%
-    );
+  .mc-navbar-link {
+    color: color-mix(in oklab, var(--foreground) 72%, var(--muted-foreground));
   }
 
-  *::-webkit-scrollbar-thumb:active {
-    background: linear-gradient(
-      180deg,
-      var(--grass-dark) 0 22%,
-      var(--dirt) 22% 28%,
-      var(--stone-dark) 28% 100%
-    );
+  .mc-navbar-link:hover {
+    color: var(--foreground);
+    background: color-mix(in oklab, var(--accent) 85%, white);
+  }
+
+  .mc-navbar-link--active {
+    color: var(--foreground);
+    /* Slightly darker than default accent highlight — clearly visible on the bar */
+    background: oklch(0.86 0.05 92);
     box-shadow:
-      inset 2px 2px 0 0 color-mix(in oklab, var(--stone-dark) 95%, black),
-      inset -2px -2px 0 0 color-mix(in oklab, var(--stone) 40%, white);
+      inset -1px -1px 0 0 color-mix(in oklab, oklch(0.75 0.04 85) 40%, transparent),
+      inset 1px 1px 0 0 color-mix(in oklab, white 85%, transparent);
   }
 
-  *::-webkit-scrollbar-corner {
-    background: var(--dirt-dark);
+  .mc-profile-ring {
+    border-radius: 9999px;
+    border: 2.5px solid var(--grass);
+    background: transparent;
   }
 }
 
@@ -293,14 +282,107 @@
     );
   }
 
-  /* Sky gradient */
-  .bg-mc-sky {
+  /* Theme ground bars — inset from edges, soft pixel corners (landing + form scenes) */
+  .mc-theme-divider {
+    height: 1rem;
+    width: min(42rem, calc(100% - 3rem));
+    margin-inline: auto;
+    border-radius: 4px;
+    border-width: 2px;
+    border-style: solid;
+  }
+
+  .mc-grass-divider {
+    border-color: color-mix(in oklab, var(--grass-dark) 65%, black);
     background: linear-gradient(
       180deg,
-      oklch(0.85 0.1 230) 0%,
-      oklch(0.92 0.06 220) 60%,
-      oklch(0.96 0.03 200) 100%
+      var(--grass) 0 28%,
+      var(--grass-dark) 28% 32%,
+      var(--dirt) 32% 100%
     );
+    box-shadow:
+      inset -2px -2px 0 0 color-mix(in oklab, var(--grass-dark) 70%, black),
+      inset 2px 2px 0 0 color-mix(in oklab, var(--grass) 75%, white),
+      0 3px 0 0 color-mix(in oklab, var(--dirt) 80%, black);
+  }
+
+  .mc-stone-divider {
+    border-color: color-mix(in oklab, var(--stone-dark) 70%, black);
+    background: linear-gradient(
+      180deg,
+      var(--stone) 0 32%,
+      var(--stone-dark) 32% 58%,
+      oklch(0.32 0.01 240) 58% 100%
+    );
+    box-shadow:
+      inset -2px -2px 0 0 color-mix(in oklab, var(--stone-dark) 75%, black),
+      inset 2px 2px 0 0 color-mix(in oklab, var(--stone) 70%, white),
+      0 3px 0 0 color-mix(in oklab, oklch(0.28 0.01 240) 90%, black);
+  }
+
+  .mc-nether-divider {
+    border-color: color-mix(in oklab, var(--redstone) 55%, black);
+    background: linear-gradient(
+      180deg,
+      oklch(0.5 0.14 28) 0 28%,
+      var(--redstone) 28% 48%,
+      oklch(0.32 0.12 28) 48% 72%,
+      oklch(0.22 0.08 28) 72% 100%
+    );
+    box-shadow:
+      inset -2px -2px 0 0 color-mix(in oklab, oklch(0.28 0.1 28) 80%, black),
+      inset 2px 2px 0 0 color-mix(in oklab, oklch(0.55 0.16 40) 60%, white),
+      0 3px 0 0 color-mix(in oklab, oklch(0.18 0.06 28) 90%, black);
+  }
+
+  .mc-end-divider {
+    border-color: color-mix(in oklab, var(--diamond) 45%, black);
+    background: linear-gradient(
+      180deg,
+      oklch(0.52 0.07 290) 0 30%,
+      oklch(0.38 0.09 290) 30% 55%,
+      oklch(0.24 0.1 290) 55% 78%,
+      oklch(0.14 0.08 290) 78% 100%
+    );
+    box-shadow:
+      inset -2px -2px 0 0 color-mix(in oklab, oklch(0.2 0.08 290) 85%, black),
+      inset 2px 2px 0 0 color-mix(in oklab, oklch(0.58 0.08 290) 55%, white),
+      0 3px 0 0 color-mix(in oklab, oklch(0.12 0.06 290) 95%, black);
+  }
+
+  /* Full content width (e.g. hero divider aligned with max-w-6xl sections) */
+  .mc-theme-divider--full {
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Site footer — grass cap + continuous soil (no mid-footer color break) */
+  .mc-footer-ground {
+    --footer-fg: oklch(0.98 0.02 90);
+    --footer-muted: oklch(0.86 0.04 75);
+    --footer-border: color-mix(in oklab, var(--dirt-dark) 35%, var(--dirt));
+    color: var(--footer-fg);
+    background-color: var(--dirt);
+    background-image: linear-gradient(
+      180deg,
+      var(--grass) 0 10px,
+      var(--grass-dark) 10px 14px,
+      var(--dirt) 14px 100%
+    );
+    box-shadow: inset 0 3px 0 0 color-mix(in oklab, var(--grass) 70%, white);
+  }
+
+  .mc-footer-ground .text-muted-foreground {
+    color: var(--footer-muted);
+  }
+
+  .mc-footer-ground a:hover {
+    color: oklch(0.92 0.12 142);
+  }
+
+  /* Sky gradient */
+  .bg-mc-sky {
+    background: var(--mc-sky-gradient);
   }
 
   /* Floating block animation */
@@ -400,4 +482,83 @@
     border-radius: 2px !important;
     background: var(--muted) !important;
   }
+}
+
+/* Scrollbar — outside @layer so the track stays fully invisible (thumb only) */
+html {
+  scrollbar-color: var(--grass) transparent;
+  scrollbar-width: thin;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+html::-webkit-scrollbar-track-piece,
+body::-webkit-scrollbar-track-piece {
+  background: rgba(0, 0, 0, 0) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  -webkit-appearance: none;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+html::-webkit-scrollbar-button,
+body::-webkit-scrollbar-button,
+html::-webkit-scrollbar-button:single-button,
+body::-webkit-scrollbar-button:single-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+}
+
+html::-webkit-scrollbar-corner,
+body::-webkit-scrollbar-corner {
+  background: transparent !important;
+}
+
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0 !important;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--grass) 55%, white) 0 30%,
+    var(--grass) 30% 68%,
+    var(--grass-dark) 68% 100%
+  );
+  border: 2px solid color-mix(in oklab, var(--grass-dark) 70%, black);
+  background-clip: padding-box;
+  box-shadow:
+    inset -2px -2px 0 0 color-mix(in oklab, var(--grass-dark) 80%, black),
+    inset 2px 2px 0 0 color-mix(in oklab, var(--grass) 60%, white);
+  min-height: 2.5rem;
+}
+
+html::-webkit-scrollbar-thumb:hover,
+body::-webkit-scrollbar-thumb:hover {
+  border-radius: 0 !important;
+  background: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--grass) 70%, white) 0 30%,
+    var(--grass) 30% 100%
+  );
+}
+
+html::-webkit-scrollbar-thumb:active,
+body::-webkit-scrollbar-thumb:active {
+  border-radius: 0 !important;
+  background: linear-gradient(180deg, var(--grass-dark) 0 40%, var(--grass) 40% 100%);
+  box-shadow:
+    inset 2px 2px 0 0 color-mix(in oklab, var(--grass-dark) 85%, black),
+    inset -2px -2px 0 0 color-mix(in oklab, var(--grass) 45%, white);
 }

@@ -37,31 +37,52 @@ const themeFallingBlocks: Record<ThemeName, { count: number; colors: string[] }>
     },
 };
 
-const themeAnchoredBlocks: Record<
-    ThemeName,
-    { count: number; colors: string[]; blockClass: string }
-> = {
+const themeAnchoredBlocks: Record<ThemeName, { colors: string[]; blockClass: string }> = {
     grass: {
-        count: 7,
         colors: ["var(--grass)", "var(--dirt)", "var(--stone)", "var(--gold)"],
         blockClass: "mc-block",
     },
     stone: {
-        count: 8,
         colors: ["var(--stone)", "var(--stone-dark)", "var(--dirt)"],
         blockClass: "mc-block mc-block-stone",
     },
     nether: {
-        count: 7,
         colors: ["var(--redstone)", "var(--gold)", "var(--stone-dark)"],
         blockClass: "mc-block",
     },
     end: {
-        count: 8,
         colors: ["var(--diamond)", "var(--stone)", "var(--gold)"],
         blockClass: "mc-block mc-block-diamond",
     },
 };
+
+const themeDividerClass: Record<ThemeName, string> = {
+    grass: "mc-grass-divider",
+    stone: "mc-stone-divider",
+    nether: "mc-nether-divider",
+    end: "mc-end-divider",
+};
+
+/** Ground strip matching each biome (same style as landing grass divider). */
+function ThemeGroundBar({ theme }: { theme: ThemeName }) {
+    return (
+        <div
+            className="pointer-events-none absolute inset-x-0 bottom-6 z-[5] flex justify-center px-4"
+            aria-hidden
+        >
+            <div className={`mc-theme-divider ${themeDividerClass[theme]}`} />
+        </div>
+    );
+}
+
+/** Bobbing blocks hugging the form card (not the viewport edges). */
+const formAnchorLayout = [
+    { right: "-5%", top: "6%", size: 26 },
+    { right: "-9%", top: "38%", size: 22 },
+    { left: "-7%", top: "22%", size: 24 },
+    { right: "-3%", bottom: "10%", size: 20 },
+    { left: "-5%", bottom: "16%", size: 28 },
+] as const;
 
 function EndStars() {
     const stars = Array.from({ length: 24 }).map((_, i) => ({
@@ -103,42 +124,26 @@ function NetherGlow() {
     );
 }
 
-/** Blocks anchored on the right / edges that gently bob in place. */
-function AnchoredFloatingBlocks({ theme }: { theme: ThemeName }) {
-    const { count, colors, blockClass } = themeAnchoredBlocks[theme];
-
-    const blocks = Array.from({ length: count }).map((_, i) => {
-        const onRight = i % 3 !== 1;
-        return {
-            right: onRight ? `${((i * 11) % 30) + 4}%` : undefined,
-            left: onRight ? undefined : `${((i * 9) % 18) + 2}%`,
-            top: onRight ? `${((i * 17) % 62) + 12}%` : undefined,
-            bottom: onRight ? undefined : `${((i * 8) % 28) + 6}%`,
-            size: 22 + (i % 3) * 10,
-            opacity: 0.22 + (i % 4) * 0.07,
-            color: colors[i % colors.length]!,
-            delay: `${(i * 0.85) % 4.5}s`,
-            duration: 5.5 + (i % 3) * 1.2,
-        };
-    });
+function FormAnchoredBlocks({ theme }: { theme: ThemeName }) {
+    const { colors, blockClass } = themeAnchoredBlocks[theme];
 
     return (
-        <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-            {blocks.map((block, i) => (
+        <div className="pointer-events-none absolute inset-0 overflow-visible" aria-hidden>
+            {formAnchorLayout.map((slot, i) => (
                 <div
                     key={i}
                     className={`absolute animate-mc-float ${blockClass}`}
                     style={{
-                        right: block.right,
-                        left: block.left,
-                        top: block.top,
-                        bottom: block.bottom,
-                        width: block.size,
-                        height: block.size,
-                        background: block.color,
-                        opacity: block.opacity,
-                        animationDelay: block.delay,
-                        animationDuration: `${block.duration}s`,
+                        right: "right" in slot ? slot.right : undefined,
+                        left: "left" in slot ? slot.left : undefined,
+                        top: "top" in slot ? slot.top : undefined,
+                        bottom: "bottom" in slot ? slot.bottom : undefined,
+                        width: slot.size,
+                        height: slot.size,
+                        background: colors[i % colors.length]!,
+                        opacity: 0.28 + (i % 3) * 0.06,
+                        animationDelay: `${(i * 0.9) % 4}s`,
+                        animationDuration: `${5.5 + (i % 2) * 1.2}s`,
                     }}
                 />
             ))}
@@ -146,24 +151,42 @@ function AnchoredFloatingBlocks({ theme }: { theme: ThemeName }) {
     );
 }
 
-export function ThemeScene({ theme, children }: { theme: ThemeName; children: React.ReactNode }) {
+export function ThemeScene({
+    theme,
+    children,
+    formAnchoredBlocks = false,
+}: {
+    theme: ThemeName;
+    children: React.ReactNode;
+    /** When true, bobbing blocks are placed beside the centered form card. */
+    formAnchoredBlocks?: boolean;
+}) {
     const falling = themeFallingBlocks[theme];
 
     return (
         <div
-            className="min-h-screen relative overflow-hidden"
+            className="relative z-[1] min-h-screen overflow-hidden"
             style={{ background: sceneBackgrounds[theme] }}
         >
             {theme === "nether" && <NetherGlow />}
             {theme === "end" && <EndStars />}
             <FloatingBlocks count={falling.count} colors={falling.colors} />
-            <AnchoredFloatingBlocks theme={theme} />
             <div
                 className="pointer-events-none absolute inset-0"
                 aria-hidden
                 style={{ background: themeAtmosphere[theme] }}
             />
-            <div className="relative z-10">{children}</div>
+            {formAnchoredBlocks && <ThemeGroundBar theme={theme} />}
+            {formAnchoredBlocks ? (
+                <div className="relative z-10 flex min-h-screen justify-center px-4 py-12 pb-20">
+                    <div className="relative w-full max-w-2xl">
+                        <FormAnchoredBlocks theme={theme} />
+                        {children}
+                    </div>
+                </div>
+            ) : (
+                <div className="relative z-10">{children}</div>
+            )}
         </div>
     );
 }

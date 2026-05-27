@@ -85,7 +85,7 @@ const themeUI: Record<
 
 function PublicFormShell({ children }: { children: React.ReactNode }) {
     return (
-        <div className="min-h-screen grid place-items-center bg-mc-sky px-4">
+        <div className="relative z-[1] grid min-h-screen place-items-center px-4">
             <div className="fixed top-4 left-4 z-50">
                 <MusicControls showTrackSelectOnMobile />
             </div>
@@ -199,13 +199,12 @@ export default function PublicFormPage() {
 
     if (done) {
         return (
-            <ThemeScene theme={theme}>
+            <ThemeScene theme={theme} formAnchoredBlocks>
                 <div className="fixed top-4 left-4 z-50">
                     <MusicControls showTrackSelectOnMobile />
                 </div>
-                <div className="min-h-screen grid place-items-center px-4">
-                    <div
-                        className="rounded-md p-10 text-center max-w-md"
+                <div
+                    className="rounded-md p-10 text-center"
                         style={{
                             background: ui.cardBg,
                             border: `3px solid ${ui.cardBorder}`,
@@ -220,7 +219,6 @@ export default function PublicFormPage() {
                         <p className="font-mc text-lg mt-2" style={{ color: ui.muted }}>
                             Thanks for filling out this form, adventurer.
                         </p>
-                    </div>
                 </div>
             </ThemeScene>
         );
@@ -269,14 +267,12 @@ export default function PublicFormPage() {
     };
 
     return (
-        <ThemeScene theme={theme}>
+        <ThemeScene theme={theme} formAnchoredBlocks>
             <div className="fixed top-4 left-4 z-50">
                 <MusicControls showTrackSelectOnMobile />
             </div>
-            <div className="py-12 px-4">
-                <div className="max-w-2xl mx-auto">
-                    <div
-                        className="rounded-md p-8 sm:p-10 backdrop-blur-sm"
+            <div
+                className="rounded-md p-8 sm:p-10 backdrop-blur-sm"
                         style={{
                             background: ui.cardBg,
                             border: `3px solid ${ui.cardBorder}`,
@@ -412,8 +408,6 @@ export default function PublicFormPage() {
                                 This form has no questions yet.
                             </p>
                         )}
-                    </div>
-                </div>
             </div>
         </ThemeScene>
     );
