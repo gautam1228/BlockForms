@@ -1,11 +1,13 @@
 # Production stack: Postgres + API + Web + Caddy (TLS + reverse proxy)
 #
-# Usage:
-#   cp .env.production.example .env.production
-#   # fill in secrets + DOMAIN
-#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+# IMPORTANT: Compose does NOT read .env.production automatically.
+# Use the deploy script (recommended):
+#   ./deploy.sh up -d --build
+#   ./deploy.sh down
+#   ./deploy.sh logs api --tail 100
 #
-# DNS: point your subdomain A record to this VPS before first boot (Caddy needs it for TLS).
+# Or pass --env-file manually:
+#   docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
 
 services:
   postgres:
