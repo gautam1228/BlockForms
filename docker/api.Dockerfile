@@ -9,6 +9,8 @@ FROM base AS builder
 COPY . .
 RUN pnpm install --frozen-lockfile
 RUN pnpm turbo build --filter=@repo/api
+# Pruned prod node_modules with correct symlinks (root node_modules alone breaks pnpm resolution)
+RUN pnpm deploy --filter=@repo/api --prod /prod/api
 
 FROM base AS runner
 ENV NODE_ENV=prod
@@ -17,12 +19,8 @@ WORKDIR /app
 RUN groupadd --system --gid 1001 nodejs \
   && useradd --system --uid 1001 --gid nodejs api
 
-COPY --from=builder /app/apps/api/dist ./apps/api/dist
-COPY --from=builder /app/apps/api/package.json ./apps/api/package.json
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /prod/api ./
 
-WORKDIR /app/apps/api
 USER api
 EXPOSE 8000
 CMD ["node", "dist/index.js"]
