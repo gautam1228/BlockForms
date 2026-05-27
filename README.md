@@ -112,6 +112,13 @@ pnpm dev
 | tRPC | http://localhost:8000/trpc |
 | API docs | http://localhost:8000/docs |
 
+### Demo credentials (For Hackathon)
+
+| Field | Value |
+|-------|--------|
+| Email | `gautamsingh12122003@gmail.com` |
+| Password | `Gautam@1234` |
+
 ## Scripts
 
 ```bash
