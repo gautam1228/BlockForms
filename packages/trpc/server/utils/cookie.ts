@@ -8,9 +8,7 @@ const ONE_MONTH = 30 * ONE_DAY;
 const ONE_YEAR = 12 * ONE_MONTH;
 
 const cookieSecure =
-    process.env.COOKIE_SECURE === "true" ||
-    process.env.NODE_ENV === "prod" ||
-    process.env.NODE_ENV === "production";
+    process.env.COOKIE_SECURE === "true" || process.env.NODE_ENV === "production";
 
 const defaultCookieOptions: CookieOptions = {
     path: "/",

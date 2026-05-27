@@ -24,8 +24,8 @@ export function loadDraftFromStorage(formId: string): FormDoc | null {
         const raw = localStorage.getItem(`${DRAFT_KEY_PREFIX}${formId}`);
         if (!raw) return null;
         const parsed = JSON.parse(raw) as StoredDraft;
-        const form = { ...parsed };
-        delete form._localSavedAt;
+        const { _localSavedAt, ...form } = parsed;
+        void _localSavedAt;
         return prepareFormDraftForStorage(form);
     } catch {
         return null;
