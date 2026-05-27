@@ -41,12 +41,18 @@ export function Footer() {
                             Crafted, block by block.
                         </p>
                     </div>
-                    <div className="flex gap-6 font-mc text-base">
+                    <div className="flex flex-wrap gap-x-6 gap-y-2 font-mc text-base">
                         <Link href="/pricing" className="hover:text-primary">
                             Pricing
                         </Link>
                         <Link href="/featured" className="hover:text-primary">
                             Featured
+                        </Link>
+                        <Link href="/terms" className="hover:text-primary">
+                            Terms
+                        </Link>
+                        <Link href="/privacy" className="hover:text-primary">
+                            Privacy
                         </Link>
                         {showAuthedNav ? (
                             <Link href="/dashboard" className="hover:text-primary">
@@ -67,7 +73,14 @@ export function Footer() {
 
                 <div className="mt-8 flex flex-col gap-4 border-t border-[var(--footer-border)] pt-6 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-mc text-sm text-muted-foreground">
-                        © {year} BlockForms. All rights reserved.
+                        © {year} BlockForms. All rights reserved.{" "}
+                        <Link href="/terms" className="text-primary underline underline-offset-2">
+                            Terms
+                        </Link>
+                        {" · "}
+                        <Link href="/privacy" className="text-primary underline underline-offset-2">
+                            Privacy
+                        </Link>
                     </p>
                     <div className="flex items-center gap-2">
                         {SOCIAL_ITEMS.map(({ href, label, icon: Icon }) => (
