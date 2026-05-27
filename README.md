@@ -1,135 +1,135 @@
-# Turborepo starter
+# BlockForms
 
-This Turborepo starter is maintained by the Turborepo core team.
+Craft forms, block by block. BlockForms is a Typeform-style form builder with a Minecraft-inspired UI — design dynamic forms, publish shareable links, and collect responses.
 
-## Using this example
+## Features
 
-Run the following command:
+- Visual form builder with drag-and-order fields and draft sync
+- Public forms at `/f/[id]` with biome themes (Overworld, Caves, Nether, The End)
+- Auth (sign up, login, email verification, password reset)
+- Form visibility, password protection, and login-required submissions
+- Response export and featured public forms gallery
+- Background music, click SFX, and themed landing page
 
-```sh
-npx create-turbo@latest
-```
+## Tech stack
 
-## What's inside?
+| Layer | Stack |
+|-------|--------|
+| Frontend | Next.js 16, React, Tailwind, tRPC client |
+| Backend | Express, tRPC, OpenAPI (`/docs`) |
+| Database | PostgreSQL, Drizzle ORM |
+| Monorepo | pnpm workspaces, Turborepo |
 
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## Project structure
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+apps/
+  web/          Next.js frontend (port 3000)
+  api/          Express + tRPC API (port 8000)
+packages/
+  database/     Drizzle schema and migrations
+  services/     Business logic (forms, auth, submissions)
+  trpc/         Shared tRPC router and client
+  logger/       Logging
+  eslint-config/
+  typescript-config/
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## Prerequisites
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+- **Node.js** ≥ 18
+- **pnpm** 9 (`corepack enable && corepack prepare pnpm@9.0.0 --activate`)
+- **Docker** (for local Postgres only)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+## Local development
 
-### Develop
+### 1. Clone and install
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```bash
+git clone <repo-url> blockforms
+cd blockforms
+pnpm install
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+### 2. Environment variables
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+Create a `.env` file at the repo root (used by all apps via `dotenv`):
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+```env
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/dev
 
-### Remote Caching
+HASHING_ALGORITHM=sha256
+JWT_ACCESS_SECRET=your-local-access-secret
+JWT_ACCESS_EXPIRES=15m
+JWT_REFRESH_SECRET=your-local-refresh-secret
+JWT_REFRESH_EXPIRES=7d
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=api
+SMTP_PASS=your-smtp-password
+SENDER_EMAIL=noreply@example.com
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+APP_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_API_URL=http://localhost:8000/trpc
+BASE_URL=http://localhost:8000
+CORS_ORIGIN=http://localhost:3000
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Optional: run `./setup.sh` to symlink the root `.env` into each app/package directory.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+### 3. Start PostgreSQL
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+docker compose up -d
 ```
 
-## Useful Links
+This starts Postgres on **5432** with user `postgres`, password `postgres`, database `dev`.
 
-Learn more about the power of Turborepo:
+### 4. Run migrations
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+```bash
+pnpm db:migrate
+```
+
+Generate new migrations after schema changes:
+
+```bash
+pnpm db:generate
+pnpm db:migrate
+```
+
+### 5. Start dev servers
+
+```bash
+pnpm dev
+```
+
+| Service | URL |
+|---------|-----|
+| Web | http://localhost:3000 |
+| API | http://localhost:8000 |
+| tRPC | http://localhost:8000/trpc |
+| API docs | http://localhost:8000/docs |
+
+## Scripts
+
+```bash
+pnpm dev           # Web + API (via Turbo)
+pnpm build         # Production build
+pnpm lint          # ESLint
+pnpm format        # Prettier
+pnpm check-types   # TypeScript
+pnpm db:migrate    # Apply migrations
+pnpm db:generate   # Generate migration from schema changes
+```
+
+## Production deployment
+
+For VPS deployment with Docker Compose, Caddy (HTTPS), and a subdomain, see **[deploy/README.md](./deploy/README.md)**.
+
+Copy `.env.production.example` to `.env.production`, fill in your domain and secrets, then:
+
+```bash
+docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
+```
