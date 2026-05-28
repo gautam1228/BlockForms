@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
+import { LandingHero } from "~/components/landing-hero";
 import { SiteLayout } from "~/components/site-layout";
 
 const THEMES = [
@@ -90,53 +91,7 @@ const TIERS = [
 export default function Landing() {
     return (
         <SiteLayout>
-            {/* HERO */}
-            <section className="relative overflow-hidden">
-                <div className="relative z-[1] mx-auto max-w-6xl px-4 sm:px-6 pt-20 pb-32 text-center">
-                    <div className="inline-flex items-center gap-2 mc-block mc-block-gold bg-gold px-3 py-1 mb-6">
-                        <Sparkles className="h-3.5 w-3.5" />
-                        <span className="font-pixel text-[9px]">v1.0 · NOW IN BETA</span>
-                    </div>
-                    <h1 className="font-pixel text-2xl sm:text-4xl md:text-4xl leading-[1.4] text-foreground max-w-4xl mx-auto">
-                        CRAFT FORMS &
-                        <br />
-                        BUILD INSIGHTS.
-                        <br />
-                        <span className="text-primary">BLOCK BY BLOCK.</span>
-                    </h1>
-                    <p className="font-mc text-xl sm:text-2xl text-muted-foreground mt-8 max-w-2xl mx-auto">
-                        Build interactive forms, publish in seconds, and track every response like
-                        rare loot drops.
-                    </p>
-                    <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-                        <Link href="/signup">
-                            <button className="mc-block bg-grass text-primary-foreground h-12 px-6 font-pixel text-xs">
-                                START CRAFTING
-                            </button>
-                        </Link>
-                        <Link href="/dashboard">
-                            <button className="mc-block mc-block-stone bg-stone h-12 px-6 font-pixel text-xs text-foreground">
-                                OPEN INVENTORY
-                            </button>
-                        </Link>
-                    </div>
-
-                    {/* Floating grass block art */}
-                    <div className="mt-16 flex justify-center">
-                        <div className="animate-mc-float">
-                            <div className="w-28 h-28 mc-block bg-grass grid place-items-center">
-                                <Pickaxe className="h-10 w-10 text-white/90" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="mx-auto max-w-6xl px-4 sm:px-6">
-                    <div
-                        className="mc-theme-divider mc-theme-divider--full mc-grass-divider"
-                        aria-hidden
-                    />
-                </div>
-            </section>
+            <LandingHero />
 
             {/* FEATURES */}
             <section className="mx-auto max-w-6xl px-4 sm:px-6 py-20">

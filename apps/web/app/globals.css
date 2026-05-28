@@ -396,6 +396,52 @@
     animation: mc-float 6s ease-in-out infinite;
   }
 
+  @keyframes mc-badge-pulse {
+    0%,
+    100% {
+      filter: brightness(1);
+    }
+    50% {
+      filter: brightness(1.12);
+    }
+  }
+
+  .animate-mc-badge-pulse {
+    animation: mc-badge-pulse 3.5s ease-in-out infinite;
+  }
+
+  @keyframes mc-badge-sparkle {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.65;
+      transform: scale(1.15);
+    }
+  }
+
+  .animate-mc-badge-sparkle {
+    animation: mc-badge-sparkle 3.5s ease-in-out infinite;
+  }
+
+  .mc-cta {
+    transition:
+      transform 0.15s ease,
+      filter 0.15s ease;
+  }
+
+  .mc-cta:hover:not(:disabled) {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+  }
+
+  .mc-cta:active:not(:disabled) {
+    transform: translateY(2px);
+    filter: brightness(0.97);
+  }
+
   @keyframes mc-spin {
     from {
       transform: rotateY(0deg);
